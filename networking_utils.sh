@@ -72,4 +72,14 @@ flush_network_interface()
     fi
 }
 
-
+check_can_iface() 
+{
+    local can_iface=$1
+    if ip link show ${can_iface} | grep -q "state UP"; then
+        log_pass_msg "${can_iface} interface is UP."
+        return 0  # Success
+    else
+        log_fail_msg "${can_iface} interface is DOWN."
+        return 1  # Failure
+    fi
+}
